@@ -1,0 +1,24 @@
+{
+  "name": "general_qa_demo",
+  "description": "通用问答评测样例（脱敏演示用，3 条；真实使用时请替换为你的私有/公开评测集）",
+  "items": [
+    {
+      "id": "qa_001",
+      "category": "科学常识",
+      "prompt": "请简要解释什么是傅里叶变换，以及它在信号处理中的作用。",
+      "reference": "傅里叶变换将时域信号分解为不同频率的正弦分量，用于频谱分析、滤波和压缩。它在信号处理中用于提取频率特征、去噪和特征工程。"
+    },
+    {
+      "id": "qa_002",
+      "category": "编程",
+      "prompt": "用 Python 写一个函数，返回列表中出现次数最多的元素。",
+      "reference": "可以使用 collections.Counter 的 most_common(1) 实现：from collections import Counter; def majority(lst): return Counter(lst).most_common(1)[0][0]。注意处理空列表。"
+    },
+    {
+      "id": "qa_003",
+      "category": "常识推理",
+      "prompt": "如果今天是周三，三天后是星期几？请说明推理过程。",
+      "reference": "周三加三天是周六。推理：周四(1)、周五(2)、周六(3)，所以三天后是星期六。"
+    }
+  ]
+}

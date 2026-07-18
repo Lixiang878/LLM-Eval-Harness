@@ -1,0 +1,14 @@
+{
+  "note": "评测运行配置示例。CLI 默认走离线 mock，无需本文件。接入真实模型时在环境变量或脚本中传入 api_key。",
+  "default_judge": "mock",
+  "models": {
+    "openai-demo": {
+      "type": "openai-compatible",
+      "name": "gpt-4o-mini",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "temperature": 0.0,
+      "api_key_env": "OPENAI_API_KEY"
+    }
+  }
+}

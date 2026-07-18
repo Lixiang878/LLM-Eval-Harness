@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 安全漏洞（请私密报告）
+    url: https://github.com/Lixiang878/llm-eval-harness/security/advisories/new
+    about: 不要公开披露安全问题，请走 Security Advisory。
+  - name: 使用问答 / 讨论
+    url: https://github.com/Lixiang878/llm-eval-harness/discussions
+    about: 配置、用法、最佳实践类问题可在此交流。

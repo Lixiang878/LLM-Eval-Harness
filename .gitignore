@@ -1,0 +1,32 @@
+# 字节码 / 缓存
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# 打包产物
+build/
+dist/
+
+# 测试 /  lint 缓存
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 密钥与本地配置
+.env
+*.local
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+.DS_Store
+
+# 注意：results/ 下的离线演示产物是有意保留并纳入版本管理的，
+# 用于直观展示框架输出，请勿在此忽略。

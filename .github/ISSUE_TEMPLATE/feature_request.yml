@@ -1,0 +1,24 @@
+name: Feature request
+description: 提出新功能或改进建议
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 背景与问题
+      description: 这个功能解决了什么实际痛点？现在为什么做不到？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 你期望怎样实现？涉及哪些模块（pipeline / judge / analysis）？
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 备选方案
+      description: 是否考虑过其他做法？各自的取舍是什么？
