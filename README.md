@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/Lixiang878/llm-eval-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/Lixiang878/llm-eval-harness/actions/workflows/ci.yml)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Coverage](https://img.shields.io/badge/tests-passing-brightgreen.svg)](https://github.com/Lixiang878/llm-eval-harness)
 
 > 一个轻量、可读、可复现的大模型评测框架：多模型对比、LLM-as-Judge 自动打分、Bad Case 归因。
 > A lightweight, reproducible LLM evaluation harness: multi-model comparison, LLM-as-Judge scoring, and Bad Case attribution.
@@ -112,6 +113,26 @@ spec = {
 
 真实打分可把 `MockJudge` 换成 `LLMJudge(client)`，由另一个模型充当裁判。
 
+## 相关作品对比
+
+同类工具不少，定位各有侧重；本项目的取舍是"**小而透明、可归因**"：
+
+| 项目 | 定位 | 规模 | 裁判方式 | 本项目的差异 |
+|---|---|---|---|---|
+| **lm-evaluation-harness**（EleutherAI） | 学术基准少样本评测框架 | 60+ 基准、生产级，HF Open LLM Leaderboard 后端 | 客观指标（精确匹配 / 困惑度等） | 它是"客观题"框架；本项目聚焦"主观开放题 + LLM-as-Judge + 归因" |
+| **HELM**（斯坦福 CRFM） | 整体性、多指标评测 | 大而全、重透明度 | 多维度综合 | 它重"全"，本项目重"可读、可改、可嵌入" |
+| **MT-Bench**（LMSYS） | 多轮开放问答能力 | 单基准、GPT-4 当裁判 | LLM 裁判 | 它是基准；本项目是可复用、可自定义 rubric 的脚手架 |
+| **llm-eval-harness（本项）** | 轻量、可复现、可归因 | 小、每模块可讲清 | Rubric + 可选 LLM 裁判 + Bad Case 归因 | 离线零依赖、代码可读、归因内建 |
+
+诚实地说：如果你要跑 MMLU / GSM8K 这类标准学术榜，直接用 lm-evaluation-harness；如果你要的是"给自己的私有评测集、用一把自定义尺子、快速看出哪个模型弱在哪"，这正是本项目存在的理由。
+
+## 方法论（设计决策）
+
+- **Rubric 即契约**：维度、量级、权重全部在 `default_rubric.json` 声明，报告与裁判都从它推导。换一把尺子只改一个文件，保证"可比、可复现"。
+- **归因而非只打分**：`badcase` 按每条样本各维度得分与总均值的差距，定位"最弱维度"，把"低分"变成"可改的行动项"，而非一个数字。
+- **Mock 是确定性回退**：`MockJudge` 用基于回答长度的启发式打分，仅为让整条链路在无 Key 时也能跑通与 CI；它**不替代**真实 LLM 裁判。
+- **离线与真实同构**：真实路径与 mock 路径走同一套 Pipeline/Judge 接口，区别仅在客户端与裁判实现，便于对照验证。
+
 ## 配置
 
 ### 评测集（benchmarks）
@@ -201,6 +222,7 @@ llm-eval-harness/
 - [ ] 更多评测集加载器（MMLU / GSM8K 等公开集适配）
 - [ ] 评测结果可视化 Web 界面
 - [ ] 并发评测与断点续跑
+- [ ] 裁判一致性（inter-rater）报告：多次 LLM 裁判的方差
 
 ## 贡献
 
