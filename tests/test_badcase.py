@@ -8,11 +8,11 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 import pytest  # noqa: E402
 
-from llm_eval_harness.analysis import badcase as badcase_mod  # noqa: E402
 from llm_eval_harness import __main__ as main_mod  # noqa: E402
-from llm_eval_harness.pipeline import run  # noqa: E402
+from llm_eval_harness.analysis import badcase as badcase_mod  # noqa: E402
 from llm_eval_harness.judge.llm_judge import MockJudge  # noqa: E402
 from llm_eval_harness.models.clients import MockClient  # noqa: E402
+from llm_eval_harness.pipeline import run  # noqa: E402
 
 
 def _result(scores):
