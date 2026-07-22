@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "LLM-Eval-Harness: Lightweight LLM Evaluation Framework"
+authors:
+  - family-names: Li
+    given-names: Xiang
+type: software
+version: 1.0.0
+date-released: "2026-07-22"
+license: MIT
+repository-code: "https://github.com/Lixiang878/LLM-Eval-Harness"
+keywords:
+  - llm
+  - evaluation
+  - llm-as-judge
+  - benchmark
+abstract: "A lightweight, reproducible LLM evaluation harness: multi-model comparison, LLM-as-Judge scoring, and Bad Case attribution. Runs fully offline with zero third-party dependencies."
