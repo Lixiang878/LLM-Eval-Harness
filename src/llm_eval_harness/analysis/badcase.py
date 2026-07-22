@@ -17,10 +17,12 @@ def analyze(result: dict, threshold: float = THRESHOLD) -> list:
     rubric = result.get("rubric", [])
     bad = []
     for rec in result["records"]:
-        weak = [d for d in rubric if rec["scores"].get(d, 10) < threshold]
+        # A missing dimension is treated as exactly at threshold: it is neither
+        # flagged as weak nor selected as the worst dimension (i.e. "unknown").
+        weak = [d for d in rubric if rec["scores"].get(d, threshold) < threshold]
         if not weak:
             continue
-        worst = min(weak, key=lambda d: rec["scores"].get(d, 0))
+        worst = min(weak, key=lambda d: rec["scores"].get(d, threshold))
         bad.append({
             "id": rec["id"],
             "category": rec.get("category", ""),
@@ -33,10 +35,10 @@ def analyze(result: dict, threshold: float = THRESHOLD) -> list:
     return bad
 
 
-def render_markdown(bad: list) -> str:
+def render_markdown(bad: list, threshold: float = THRESHOLD) -> str:
     if not bad:
         return "# Bad Case 归因\n\n未发现低于阈值的样本，模型表现稳定。"
-    lines = ["# Bad Case 归因", f"共 {len(bad)} 条低分样本（阈值 {THRESHOLD}）\n"]
+    lines = ["# Bad Case 归因", f"共 {len(bad)} 条低分样本（阈值 {threshold}）\n"]
     for b in bad:
         lines.append(f"## {b['id']}（{b['category']}）— 总分 {b['overall']}")
         lines.append(f"- 归因：**{b['reason']}**")
@@ -49,7 +51,7 @@ def render_markdown(bad: list) -> str:
 
 def write(result: dict, out_md: str, threshold: float = THRESHOLD) -> str:
     bad = analyze(result, threshold)
-    md = render_markdown(bad)
+    md = render_markdown(bad, threshold)
     os.makedirs(os.path.dirname(out_md) or ".", exist_ok=True)
     with open(out_md, "w", encoding="utf-8") as f:
         f.write(md)

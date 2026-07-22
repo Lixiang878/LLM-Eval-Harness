@@ -22,6 +22,8 @@ def run(model_client, judge=None, benchmark_path: str | None = None,
        out_path: str | None = None) -> dict:
     judge = judge or MockJudge()
     rubric = load_rubric(rubric_path)
+    if benchmark is None and benchmark_path is None:
+        raise ValueError("run() requires either `benchmark` or `benchmark_path`")
     items = benchmark if benchmark is not None else load_benchmark(benchmark_path)
 
     records = []

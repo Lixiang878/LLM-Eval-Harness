@@ -22,7 +22,7 @@
 - **离线即可运行**：`MockClient` + `MockJudge` 不需要 API Key、不需要联网、不需要第三方包，开箱即跑。
 - **真实模型适配**：`OpenAICompatibleClient` 兼容 OpenAI 及文心、通义、本地 vLLM 等 OpenAI 协议网关，仅在调用真实模型时惰性导入 `requests`。
 - **LLM-as-Judge**：以评分量表（rubric）为基准，对准确性 / 完整性 / 相关性 / 可读性等维度自动打分；亦可改用真实 LLM 作为裁判。
-- **可插拔评分量表**：维度与权重在 `configs/default_rubric.json` 自定义，裁判与报告自动识别新维度。
+- **可插拔评分量表**：默认量表随包内置（`src/llm_eval_harness/judge/default_rubric.json`，自动加载）；如需自定义维度，复制为 `configs/default_rubric.json` 并以 `--rubric configs/default_rubric.json` 运行，裁判与报告自动识别新维度。
 - **可扩展评测集**：评测集即 JSON，新增一条 `item` 即可扩充。
 - **报告与归因**：`report` 生成多模型对比表（可选柱状图），`badcase` 自动按最弱维度归类低分样本。
 
@@ -128,8 +128,8 @@ spec = {
 
 ## 方法论（设计决策）
 
-- **Rubric 即契约**：维度、量级、权重全部在 `default_rubric.json` 声明，报告与裁判都从它推导。换一把尺子只改一个文件，保证"可比、可复现"。
-- **归因而非只打分**：`badcase` 按每条样本各维度得分与总均值的差距，定位"最弱维度"，把"低分"变成"可改的行动项"，而非一个数字。
+- **Rubric 即契约**：维度与量级在量表（随包内置 `judge/default_rubric.json`，或通过 `--rubric` 指定）声明，报告与裁判都从它推导。换一把尺子只改一个文件，保证"可比、可复现"。
+- **归因而非只打分**：`badcase` 按每条样本各维度得分是否低于阈值（默认 6.0，可用 `--threshold` 调整）定位"最弱维度"，把"低分"变成"可改的行动项"，而非一个数字。
 - **Mock 是确定性回退**：`MockJudge` 用基于回答长度的启发式打分，仅为让整条链路在无 Key 时也能跑通与 CI；它**不替代**真实 LLM 裁判。
 - **离线与真实同构**：真实路径与 mock 路径走同一套 Pipeline/Judge 接口，区别仅在客户端与裁判实现，便于对照验证。
 
@@ -153,7 +153,7 @@ JSON 文件，顶层为 `items` 数组，每条记录：
 
 ### 评分量表（rubric）
 
-`configs/default_rubric.json` 定义维度与描述，例如：
+`configs/default_rubric.json`（随仓库提供、可作模板）定义维度与描述；运行 `badcase`/`run` 时通过 `--rubric configs/default_rubric.json` 加载。例如：
 
 ```json
 {

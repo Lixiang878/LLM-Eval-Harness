@@ -44,8 +44,7 @@ pytest -q           # 单元测试
 的 `complete()`，并在 `build_client()` 工厂里登记类型。若走 OpenAI 兼容协议，
 通常直接复用 `OpenAICompatibleClient` 并传入对应 `base_url` 即可。
 
-**自定义评分维度**：编辑 `configs/default_rubric.json`，或运行时用
-`--rubric your_rubric.json` 指定。维度键会被裁判与报告自动识别。
+**自定义评分维度**：默认量表随包内置（`src/llm_eval_harness/judge/default_rubric.json`）会自动加载；如要自定义，复制为 `configs/default_rubric.json` 并运行 `--rubric configs/default_rubric.json` 指定。维度键会被裁判与报告自动识别。
 
 ## 提交与 PR
 
