@@ -3,8 +3,6 @@
 [![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/Lixiang878/llm-eval-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/Lixiang878/llm-eval-harness/actions/workflows/ci.yml)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![Coverage](https://img.shields.io/badge/tests-passing-brightgreen.svg)](https://github.com/Lixiang878/llm-eval-harness)
 
 > 一个轻量、可读、可复现的大模型评测框架：多模型对比、LLM-as-Judge 自动打分、Bad Case 归因。
 > A lightweight, reproducible LLM evaluation harness: multi-model comparison, LLM-as-Judge scoring, and Bad Case attribution.
